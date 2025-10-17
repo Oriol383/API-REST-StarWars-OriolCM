@@ -34,23 +34,22 @@ setup_admin(app)
 def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
 
-# generate sitemap with all your endpoints
+
 
 
 @app.route('/')
-def welcome_sw():
+def mensaje_bienvenidaSW():
     return jsonify({"mensaje": "Bienvendio humano a una galaxia muy muy lejana..."})
 
 
-
 @app.route('/character', methods=['GET'])
-def get_characters():
+def get_personajes():
     characters = Character.query.all()
     return jsonify([character.serialize() for character in characters]), 200
 
-# POST para Character
+
 @app.route('/character', methods=['POST'])
-def create_character():
+def crear_personaje():
     data = request.get_json()
     required_fields = ["name", "last_name", "race", "native_planet", "is_jedi"]
     if not all(field in data for field in required_fields):
@@ -69,14 +68,15 @@ def create_character():
 
     return jsonify(new_character.serialize()), 201
 
+
 @app.route('/planet', methods=['GET'])
-def get_planets():
+def get_planeta():
     planets = Planet.query.all()
     return jsonify([planet.serialize() for planet in planets]), 200
 
-# POST para Planet
+
 @app.route('/planet', methods=['POST'])
-def create_planet():
+def crear_planeta():
     data = request.get_json()
     required_fields = ["name", "solar_system"]
     if not all(field in data for field in required_fields):
@@ -92,14 +92,15 @@ def create_planet():
 
     return jsonify(new_planet.serialize()), 201
 
+
 @app.route('/weapon', methods=['GET'])
 def get_weapons():
     weapons = Weapon.query.all()
     return jsonify([weapon.serialize() for weapon in weapons]), 200
 
-# POST para Weapon
+
 @app.route('/weapon', methods=['POST'])
-def create_weapon():
+def crear_arma():
     data = request.get_json()
     required_fields = ["type", "name", "is_lethal", "weapon_owner_id"]
     if not all(field in data for field in required_fields):
@@ -116,8 +117,6 @@ def create_weapon():
     db.session.commit()
 
     return jsonify(new_weapon.serialize()), 201
-
-
 
 
 # this only runs if `$ python src/app.py` is executed
